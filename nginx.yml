@@ -23,6 +23,10 @@
       lineinfile:
         path: /etc/sudoers
         line: 'nginx ALL=(ALL:ALL) NOPASSWD:ALL'
+        
+    - name: http util
+      command: setsebool -P httpd_can_network_connect 1
+      become: yes
     
     - name: restart nginx
       service:
