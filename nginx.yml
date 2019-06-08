@@ -14,7 +14,7 @@
         
     - name: copy the nginx config file and restart nginx
       copy:
-        src: /home/knossiod/ansible/nginx.conf
+        src: nginx.conf
         dest: /etc/nginx/nginx.conf
         backup: yes
       become: yes
@@ -23,7 +23,7 @@
       lineinfile:
         path: /etc/sudoers
         line: 'nginx ALL=(ALL:ALL) NOPASSWD:ALL'
-        
+    
     - name: http util
       command: setsebool -P httpd_can_network_connect 1
       become: yes
