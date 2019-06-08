@@ -4,6 +4,11 @@
   hosts: localhost
 
   tasks:
+    - name: Install pip
+      yum:
+        name: python-pip
+        state: latest
+        
     - name: Install yum utils
       yum:
         name: yum-utils
@@ -41,10 +46,15 @@
         value: 0
       become: yes
 
-    - name: Install Docker
+    - name: Install Docker ce
       package:
         name: docker-ce
         state: latest
+      become: yes
+      
+    - name: Install Docker py
+      pip:
+        name: docker-py       
       become: yes
 
     - name: Start Docker service

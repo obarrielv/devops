@@ -1,0 +1,31 @@
+---
+- name: Nginx
+  gather_facts: No
+  hosts: localhost
+
+  tasks:
+   
+        
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: latest
+      become: yes
+        
+    - name: copy the nginx config file and restart nginx
+      copy:
+        src: /home/knossiod/ansible/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        backup: yes
+      become: yes
+      
+    - name: sudo without password for jenkins
+      lineinfile:
+        path: /etc/sudoers
+        line: 'nginx ALL=(ALL:ALL) NOPASSWD:ALL'
+    
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: yes

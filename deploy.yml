@@ -1,0 +1,14 @@
+---
+ - name: Deploy
+   gather_facts: No
+   hosts: localhost
+   tasks: 
+   - name: Start 2 load-balanced containers
+     docker_container:
+        name: "container{{ item }}"
+        recreate: yes
+        image: production
+        command: sleep 1d
+        ports:
+           - "808{{item}}:8080"
+     with_sequence: count=2   
